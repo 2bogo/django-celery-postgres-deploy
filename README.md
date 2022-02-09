@@ -13,7 +13,7 @@
 docker-compose up --build
 ```
 
-## Push image to Docker Hub
+- Push image to Docker Hub
 ```
 docker tag local-image:tagname {username/reponame}:tagname
 docker push {username/reponame}:tagname
