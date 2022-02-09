@@ -9,11 +9,12 @@
 > Deploy web application using Django, Postgres, Redis, Nginx and Kubernetes.
 
 ## Getting Started
+- docker image build
 ```
-docker-compose up --build
+docker-compose build --no-cache
 ```
 
-- Push image to Docker Hub
+- Push image to Docker Hub (app, celery)
 ```
 docker tag local-image:tagname {username/reponame}:tagname
 docker push {username/reponame}:tagname
