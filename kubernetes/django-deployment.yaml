@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: django-deployment
+spec:
+  selector:
+    matchLabels:
+      app: django-app
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: django-app
+    spec:
+      containers:
+      - name: django-app
+        image: justezy0210/django-app:1.0.0
+        imagePullPolicy: Always
+        command: ["sh", "-c", "python", "manage.py", "migrate", "&&",
+              "python", "manage.py", "collectstatic", "--no-input",
+              "python", "manage.py", "wait_for_db", "&&",
+              "gunicorn", "--bind", "0:8000", "--workers", "5", "proj.wsgi"]
+        env:
+          - name: DB_HOST
+            value: "db"
+          - name: DB_NAME
+            value: "app"
+          - name: DB_USER
+            value: "postgres"
+          - name: DB_PASSWORD
+            value: "postgres"
+
+        ports:
+        - containerPort: 8000
+      restartPolicy: Always
